@@ -41,9 +41,9 @@ function game() {
   let computerScore = 0;
   let computerSelection;
   let playerSelection;
+  let result;
 
   //loop playRound till either player reaches a score of 5
-  let result;
   do {
     playerSelection = prompt(
       `Please enter one of the following ${choices.join(
@@ -60,12 +60,12 @@ function game() {
     }
 
     computerSelection = getComputerChoice();
-    result = playRound(playerSelection, computerSelection);
-    console.log(result);
+    result = playRound(playerSelection, computerSelection).toLowerCase();
+    debugger;
     //evaluate result of playRound and update score
-    if (result.toLowerCase().includes("win")) {
+    if (result.includes("win")) {
       playerScore++;
-    } else if (result.toLowerCase().includes("lose")) {
+    } else if (result.includes("lose")) {
       computerScore++;
     }
     if (playerScore >= 5 || computerScore >= 5) break;
@@ -78,3 +78,5 @@ function game() {
     console.log("Computer Wins!");
   }
 }
+
+game();
