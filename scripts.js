@@ -61,7 +61,6 @@ function game() {
 
     computerSelection = getComputerChoice();
     result = playRound(playerSelection, computerSelection).toLowerCase();
-    debugger;
     //evaluate result of playRound and update score
     if (result.includes("win")) {
       playerScore++;
