@@ -5,8 +5,6 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-  playerSelection = playerSelection.toLowerCase();
-
   if (playerSelection === "rock") {
     switch (computerSelection) {
       case "paper":
@@ -37,8 +35,46 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-// Testing playRound
-const playerSelection = 'rock';
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+  // Keep track of scores
+  let playerScore = 0;
+  let computerScore = 0;
+  let computerSelection;
+  let playerSelection;
 
+  //loop playRound till either player reaches a score of 5
+  let result;
+  do {
+    playerSelection = prompt(
+      `Please enter one of the following ${choices.join(
+        " "
+      )} or 'quit' to end game`
+    ).toLocaleLowerCase();
+
+    if (playerSelection === "quit") {
+      console.log("Goodbye");
+      return;
+    } else if (!choices.includes(playerSelection)) {
+      alert("Invalid input!");
+      continue;
+    }
+
+    computerSelection = getComputerChoice();
+    result = playRound(playerSelection, computerSelection);
+    console.log(result);
+    //evaluate result of playRound and update score
+    if (result.toLowerCase().includes("win")) {
+      playerScore++;
+    } else if (result.toLowerCase().includes("lose")) {
+      computerScore++;
+    }
+    if (playerScore >= 5 || computerScore >= 5) break;
+  } while (true);
+
+  //print game results
+  if (playerScore === 5) {
+    console.log("Player Wins!");
+  } else {
+    console.log("Computer Wins!");
+  }
+}
