@@ -49,7 +49,7 @@ function game() {
       `Please enter one of the following ${choices.join(
         " "
       )} or 'quit' to end game`
-    ).toLocaleLowerCase();
+    ).toLowerCase();
 
     if (playerSelection === "quit") {
       console.log("Goodbye");
