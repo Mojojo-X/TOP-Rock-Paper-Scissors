@@ -73,7 +73,7 @@ function game() {
   //print game results
   if (playerScore === 5) {
     console.log("Player Wins!");
-  } else {
+  } else if (computerScore === 5){
     console.log("Computer Wins!");
   }
 }
