@@ -1,4 +1,19 @@
 const choices = ["rock", "paper", "scissors"];
+const playerBoard = document.querySelector(".player-score");
+const computerBoard = document.querySelector(".computer-score");
+const roundResult = document.querySelector(".round-result");
+const btns = document.querySelectorAll(".player-buttons>button");
+const resetBtn = document.querySelector("#reset");
+
+btns.forEach(btn => btn.addEventListener('click', game));
+resetBtn.addEventListener('click', resetGame);
+
+// Keep track of scores
+let playerScore = 0;
+let computerScore = 0;
+let computerSelection;
+let playerSelection;
+let result;
 
 function getComputerChoice() {
   return choices[Math.floor(Math.random() * choices.length)];
@@ -35,47 +50,36 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+function resetGame() {
+  playerScore = 0;
+  computerScore = 0;
+  playerBoard.innerText = `Player Score: 0`;
+  computerBoard.innerText = `Computer Score: 0`;
+  roundResult.innerText = 'Game Start !!';
+}
+
 function game() {
-  // Keep track of scores
-  let playerScore = 0;
-  let computerScore = 0;
-  let computerSelection;
-  let playerSelection;
-  let result;
 
-  //loop playRound till either player reaches a score of 5
-  do {
-    playerSelection = prompt(
-      `Please enter one of the following ${choices.join(
-        " "
-      )} or 'quit' to end game`
-    ).toLowerCase();
+  computerSelection = getComputerChoice();
+  //insert the playerSelection button id as the default argument
+  result = playRound(playerSelection = this.id, computerSelection).toLowerCase();
+  roundResult.innerText = result;
+  //evaluate result of playRound and update score
+  if (result.includes("win")) {
+    playerScore++;
+    playerBoard.innerText = `Player Score: ${playerScore}`;
+  } else if (result.includes("lose")) {
+    computerScore++;
+    computerBoard.innerText = `Computer Score: ${computerScore}`;
+  }
 
-    if (playerSelection === "quit") {
-      console.log("Goodbye");
-      return;
-    } else if (!choices.includes(playerSelection)) {
-      alert("Invalid input!");
-      continue;
-    }
-
-    computerSelection = getComputerChoice();
-    result = playRound(playerSelection, computerSelection).toLowerCase();
-    //evaluate result of playRound and update score
-    if (result.includes("win")) {
-      playerScore++;
-    } else if (result.includes("lose")) {
-      computerScore++;
-    }
-    if (playerScore >= 5 || computerScore >= 5) break;
-  } while (true);
 
   //print game results
   if (playerScore === 5) {
-    console.log("Player Wins!");
-  } else if (computerScore === 5){
-    console.log("Computer Wins!");
+    alert("Player Wins!");
+    resetGame();
+  } else if (computerScore === 5) {
+    alert("Computer Wins!");
+    resetGame();
   }
 }
-
-game();
